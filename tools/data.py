@@ -14,28 +14,32 @@ def get_dataset_file():
         urllib.urlretrieve(origin, dataset_path)
     return open(dataset_path, 'rb')
 
-selected_length = 476
-
 def get_datasets():
     f = get_dataset_file()
     zf = zipfile.ZipFile(f)
         
     data = zf.open('MU.txt', 'r')
     entire_dataset = []
-    current_event = []
+    current_event = np.zeros(512 * 4 + 2)
     
     print 'Reading data file'
+    i = 0
+
     for l in data:
         id, event, device, channel, code, size, data = l.split('\t')
-        signals = [int(n) for n in data.split(',')]
-        
-        if len(signals) == selected_length:
-            current_event.extend(signals)
-            if len(current_event) == selected_length * 4: # we assume all channels from an event are in sequence
-                current_event.append(np.array([int(code)]))
 
-                entire_dataset.append(np.array(current_event).reshape(selected_length * 4+1))
-                current_event = []
+        signals = np.array([int(val) for val in data.split(',')])
+        
+        current_event[1+ i*512:1+ i*512 + min(len(signals), 512)] = signals[:512]
+        i += 1
+
+        if i == 4: # we assume all channels from an event are in sequence
+            current_event[-1] = int(code)
+            current_event[0] = min(len(signals), 512)
+
+            entire_dataset.append(current_event)
+            current_event = np.zeros(512 * 4 + 2)
+            i = 0
 
     entire_dataset = np.array(entire_dataset)
-    return entire_dataset[:10000], entire_dataset[10000:]
+    return entire_dataset[:30000], entire_dataset[30000:]
