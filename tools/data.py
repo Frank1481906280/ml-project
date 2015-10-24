@@ -47,7 +47,7 @@ def get_datasets():
 def split_into_subsequences(data, n_sequences, length):
     output = np.zeros((data.shape[0]*n_sequences, length*4+1))
     for i in range(data.shape[0]):
-        steps = data[i, 0] / n_sequences
+        steps = (data[i, 0] - length) / (n_sequences - 1) 
 
         for j in range(n_sequences):
             output[i*n_sequences+j,:length]           = data[i, j*steps: j*steps+length]
