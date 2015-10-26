@@ -1,6 +1,7 @@
 from os.path import isfile
 import zipfile
 import numpy as np
+import random
 
 dataset_path = './data/MU.zip'
 
@@ -41,13 +42,19 @@ def get_datasets():
             current_event = np.zeros(512 * 4 + 2)
             i = 0
 
+    random.seed(111) # deterministic
+    random.shuffle(entire_dataset)
+
     entire_dataset = np.array(entire_dataset)
     return entire_dataset[:30000], entire_dataset[30000:]
 
 def split_into_subsequences(data, n_sequences, length):
     output = np.zeros((data.shape[0]*n_sequences, length*4+1))
     for i in range(data.shape[0]):
-        steps = (data[i, 0] - length) / (n_sequences - 1) 
+        if n_sequences == 1:
+            steps = 0
+        else:
+            steps = (data[i, 0] - length) / (n_sequences - 1)
 
         for j in range(n_sequences):
             output[i*n_sequences+j,:length]           = data[i, j*steps: j*steps+length]
