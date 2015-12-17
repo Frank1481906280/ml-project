@@ -1,0 +1,136 @@
+\documentclass{article} % For LaTeX2e
+\usepackage{nips15submit_e,times}
+\usepackage{hyperref}
+\usepackage{url}
+%\documentstyle[nips14submit_09,times,art10]{article} % For LaTeX 2.09
+
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+\title{Interpréter des données EEG}
+
+
+\author{
+David S.~Hippocampus\thanks{ Use footnote for providing further information
+about author (webpage, alternative address)---\emph{not} for acknowledging
+funding agencies.} \\
+Department of Computer Science\\
+Cranberry-Lemon University\\
+Pittsburgh, PA 15213 \\
+\texttt{hippo@cs.cranberry-lemon.edu} \\
+\And
+Coauthor \\
+Affiliation \\
+Address \\
+\texttt{email} \\
+\AND
+Coauthor \\
+Affiliation \\
+Address \\
+\texttt{email} \\
+\And
+Coauthor \\
+Affiliation \\
+Address \\
+\texttt{email} \\
+\And
+Coauthor \\
+Affiliation \\
+Address \\
+\texttt{email} \\
+(if needed)\\
+}
+
+% The \author macro works with any number of authors. There are two commands
+% used to separate the names and addresses of multiple authors: \And and \AND.
+%
+% Using \And between authors leaves it to \LaTeX{} to determine where to break
+% the lines. Using \AND forces a linebreak at that point. So, if \LaTeX{}
+% puts 3 of 4 authors names on the first line, and the last on the second
+% line, try using \AND instead of \And before the third author name.
+
+\newcommand{\fix}{\marginpar{FIX}}
+\newcommand{\new}{\marginpar{NEW}}
+
+%\nipsfinalcopy % Uncomment for camera-ready version
+
+\begin{document}
+
+
+\maketitle
+
+\begin{abstract}
+Ce rapport expose les travaux que nous avons réalisés durant la session d'automne 2015 du cours IFT6390 "Algorithmes d'apprentissage" de l'Université de Montréal par Pascal Vincent. Nous étudions des données EEG dans le but d'effectuer une classification, sur deux jeux de données. Nous montrons notre travail de familliarisation avec des données EEG sur un jeu de données public obtenu sur le site Kaggle, ainsi que notre travail exploratoire sur un nouveau jeu de données, Mind big data, pour lequel aucun résultat n'a été publié à ce jour. Les nouveaux résultats que nous obtenons sur Mind big data montrent qu'on peut en tirer des informations, en revanche nous pensons que les ambitions de l'auteur du jeu de données d'en faire le "MNIST des données EEG" sont trop ambitieuses.
+\end{abstract}
+
+\section{Données EEG}
+
+\begin{itemize}
+\item motiver eeg
+\item expliquer eeg
+\item capteurs médical/grand public
+\end{itemize}
+
+Dans ce projet, nous étudierons à l’interprétation de signaux provenant d’un électroencéphalogramme aussi appelé EEG. Plus particulièrement, nous nous intéresserons à la classification de ces signaux.
+Plusieurs consignes sont respectées durant les expériences soumises aux individus, afin de recueillir des données pertinentes. Dans un premier temps, plusieurs capteurs sont disposés sur la tête du sujet, puis ce sujet est soumis à un stimulus (visualisation d’un chiffre, prise d’un objet,...). Puis une réponse par capteur est récupérée sous la forme d’un signal sur l’EEG et chacun de ces signaux est capturé pendant deux secondes.
+Le but de ce projet est d’effectuer une classification de ces données grace à un algorithme d’apprentissage, afin de prédire par la suite, le stimulus proposé au sujet en fonction des signaux récupérés par l’EEG.
+
+\subsection{Jeu de données Mind big data}
+
+Il s’agit d’un jeu de données très récent, paru en Octobre 2015, pour lequel aucun résultat n’a encore été publié jusqu’à aujourd’hui. Lors de l’enregistrement de ces données, le sujet est équipé d’un casque EEG Muse doté de 4 capteurs. Le stimulus proposé est ici un chiffre entre 0 et 9.
+Ce jeu de données possède environ 40 000 enregistrements de 2 secondes chacun, avec environ 30% des enregistrements où le sujet ne voit pas de chiffre (classe -1).
+Le but est ici de prédire en fonction de nouvelles données EEG :
+
+\begin{itemize}
+\item Si le sujet regardait un chiffre (classification binaire)
+\item Quel chiffre le sujet regardait (classification multiclasse)
+\end{itemize}
+
+
+\subsection{Jeu de données Grasp and Lift}
+
+Il s’agit ici d’une compétition organisée par Kaggle, terminée en Aout 2015. L’idée de cette compétition provenait du besoin de fournir aux personnes amputées une prothèse de type BCI (Brain Computer Interface). Lors de l’enregistrement de ces données EEG sur 12 individus, le comportement analysé était celui de saisir, lever et reposer un objet sur une table.
+
+L’objectif est de fournir 6 classifications binaires des évenements en fonction des EEG et des series temporelles de plus ou moins 105 ms.
+
+\subsection{\'Etat de l'art et extraction de traits caractéristiques}
+
+\subsubsection{Traits caractéristiques visuels}
+
+Une première analyse des données 
+
+\subsubsection{Traits caractéristiques issus du traitement du signal}
+
+\par{Butterworth}
+
+\par{MFCC}
+
+\par{Mentor}
+
+\subsubsection{Apprentissage profond}
+
+Les résultats de la compétition Kaggle Grasp and Lift suggèrent d'utiliser directement les données brutes avec un modèle de réseau de neurones artificiel à convolutions. L'intérêt ici est que sans expertise préalable dans les domaines du traitement du signal ou de l'étude des EEG, on peut obtenir des résultats intéressants en laissant le modèle découvrir des représentations de nos données qui pourront être utilisées dans un classifieur.
+
+La corrélation temporelle évidente entre les données (séries temporelles) motive l'utilisation de convolutions en une dimension.
+
+\section{Classification sur Grasp and Lift}
+
+\section{Classification binaire sur Mind big data}
+
+\begin{itemize}
+\item présentation répartition des classes
+\item pourquoi faire une classification binaire
+\end{itemize}
+
+\subsection{Modèles}
+
+\subsection{Résultats}
+
+\section{Classification multiclasse sur Mind big data}
+
+David Vivancos, l'auteur du jeu de données Mind big data, a pour ambition d'en faire un équivalent du jeu de données classique MNIST qui consiste à classifier des images pour déterminer quel chiffre ces images représentent.
+
+\section{Discussion}
+
+\end{document}
